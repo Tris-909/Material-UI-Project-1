@@ -1,26 +1,38 @@
 import React from 'react';
+import Hidden from '@material-ui/core/Hidden'; // To hide the MaterialUI Component if argument is true
+
+// LAYOUT ----------------------------------------------------
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography'; 
-import {Link}  from 'react-router-dom';
-import backArrow from '../assets/backArrow.svg';
-import fowardArrow from '../assets/forwardArrow.svg';
-import IconButton from '@material-ui/core/IconButton'; 
-import Hidden from '@material-ui/core/Hidden';
+// ------------------------------------------------------------
 
+// STYLE ------------------------------------------------------
+import Typography from '@material-ui/core/Typography'; 
+import {makeStyles, useTheme} from '@material-ui/core/styles';
+// ------------------------------------------------------------
+
+// ROUTER -----------------------------------------------------
+import {Link}  from 'react-router-dom';
+// ------------------------------------------------------------
+
+// SVG ICON -----------------------------------------------------
+import IconButton from '@material-ui/core/IconButton'; 
 import SaveEnergyIcon from '../assets/bulb.svg';
 import SaveTimeIcon from '../assets/stopwatch.svg';
 import SaveMoneyIcon from '../assets/cash.svg'; 
+import backArrow from '../assets/backArrow.svg';
+import fowardArrow from '../assets/forwardArrow.svg';
+import roots from '../assets/root.svg';
+// ------------------------------------------------------------
 
+// ANIMATION -----------------------------------------------------
 import Lottie from 'react-lottie'; 
 import animationData from '../animations/documentsAnimation/data'; 
 import animationScale from '../animations/scaleAnimation/data.json';
-import roots from '../assets/root.svg';
 import WheelAnimation from '../animations/automationAnimation/data.json';
 import UXAnimation from '../animations/uxAnimation/data';
-
 import CallToAction from './UI/CallToAction';
+// ---------------------------------------------------------------
 
 const useStyles = makeStyles(theme => ({
     heading: {
@@ -163,7 +175,7 @@ export default function CustomSoftware(props) {
                         <img src={SaveTimeIcon} alt="Save Energy Icon" />
                     </Grid>
                 </Grid>
-                <Grid item container direction="column" style={{maxWidth: '15em' ,marginLeft: matchesSM ? '2em' : '0em' , marginBottom: '5em', textAlign: 'center'}}>
+                <Grid item container direction="column" style={{maxWidth: '15em' ,marginLeft: matchesSM ? '2em' : '0em' , marginBottom: matchesXS ? '5em' : '0em', textAlign: 'center'}}>
                     <Grid item>
                         <Typography variant="h2" style={{marginBottom: '0.5em'}}>Save Money</Typography>
                         <img src={SaveMoneyIcon} alt="Save Energy Icon" />
@@ -178,6 +190,11 @@ export default function CustomSoftware(props) {
                 style={{marginTop: matchesMD ? '2em ' : '5em'}} 
                 justify="space-around">
                 <Grid item container className={classes.itemContainer} md>
+                    <Hidden smUp>
+                    <Grid item container md className={classes.animation}>
+                        <Lottie options={defaultOptions} style={{maxHeight: 275, maxWidth: 275, minHeight: 250}} />   
+                    </Grid>
+                    </Hidden>
                     <Grid item container direction="column" style={{width: matchesMD ? '100%' : '50%'}} md>
                         <Typography variant="h4">Digital Documents & Data</Typography>
                         <Typography variant="body1" paragraph>
@@ -190,9 +207,11 @@ export default function CustomSoftware(props) {
                             By utilizing digital forms and documents you can remove these obsolete expenses, accelerate your communication, and help the Earth.
                         </Typography>
                     </Grid>
+                    <Hidden xsDown> 
                     <Grid item container md className={classes.animation}>
                         <Lottie options={defaultOptions} style={{maxHeight: 275, maxWidth: 275, minHeight: 250}} />   
                     </Grid>
+                    </Hidden>
                 </Grid>
                 
                 <Grid 
@@ -239,6 +258,11 @@ export default function CustomSoftware(props) {
                 alignItems={matchesMD ? "center" : undefined} 
                 style={{marginTop: matchesSM ? '0em' : '5em', marginBottom: '10em'}} 
                 justify="space-around">
+                <Hidden smUp>
+                    <Grid item container md className={classes.animation}>
+                        <Lottie options={AutoOptions} style={{maxHeight: 275, maxWidth: 275, minHeight: 250}} />   
+                    </Grid>
+                </Hidden>    
                 <Grid item container className={classes.itemContainer} md>
                     <Grid item container direction="column" style={{width: matchesMD ? '100%' : '50%'}} md>
                         <Typography variant="h4">Automation</Typography>
@@ -252,9 +276,11 @@ export default function CustomSoftware(props) {
                             Increasing efficiency increases profits, leaving you more time to focus on your business, not busywork.
                         </Typography>
                     </Grid>
+                    <Hidden xsDown>
                     <Grid item container md className={classes.animation}>
                         <Lottie options={AutoOptions} style={{maxHeight: 275, maxWidth: 275, minHeight: 250}} />   
                     </Grid>
+                    </Hidden>
                 </Grid>
                 
                 <Grid 
