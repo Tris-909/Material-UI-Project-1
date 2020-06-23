@@ -20,6 +20,8 @@ import roots from '../assets/root.svg';
 import WheelAnimation from '../animations/automationAnimation/data.json';
 import UXAnimation from '../animations/uxAnimation/data';
 
+import CallToAction from './UI/CallToAction';
+
 const useStyles = makeStyles(theme => ({
     heading: {
         maxWidth: '40em'
@@ -28,15 +30,18 @@ const useStyles = makeStyles(theme => ({
         marginTop: "0.5em"
     },
     MainContainer: {
-        padding: '2em 5em 10em 5em'
+        padding: '2em 5em 10em 5em',
+        [theme.breakpoints.down("sm")]: {
+            padding: '2em 2em 5em 2em'
+        }
     },
     animation: {
         maxWidth: '50em',
-        minWidth: '21em',
+        minWidth: '15em',
         marginTop: '2em',
         marginLeft: '10%',
         [theme.breakpoints.down("sm")]: {
-            maxWidth: '30em'
+            maxWidth: '15em'
         }
     },
     itemContainer: {
@@ -48,7 +53,8 @@ export default function CustomSoftware(props) {
     const classes = useStyles();
     const theme = useTheme();
     const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
-
+    const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+    const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
     const defaultOptions = {
         loop: true,
@@ -87,6 +93,7 @@ export default function CustomSoftware(props) {
     }
 
     return(
+        <React.Fragment>
         <Grid container direction="column" className={classes.MainContainer}>
             {/*------FIRST SECTION -------*/}
             <Grid item container direction="row" justify={matchesMD ? 'center' : 'inherit'}>
@@ -138,21 +145,25 @@ export default function CustomSoftware(props) {
 
             </Grid>
             {/*------SECOND SECTION -------*/}
-            <Grid item container direction={matchesMD ? "column" : "row"} alignItems={matchesMD ? "center" : undefined} justify="center" style={{marginTop: '5em'}}>
-                <Grid item container direction="column" style={{maxWidth: '15em', textAlign: 'center'}}>
+            <Grid 
+                item container 
+                direction={matchesMD ? "column" : "row"} 
+                alignItems={matchesXS ? "flex-start" : "center"} 
+                justify="center" style={{marginTop: matchesSM ? '2em' : '5em'}}>
+                <Grid item container direction="column" style={{maxWidth: '15em', marginLeft: matchesSM ? '2em' : '0em', textAlign: 'center'}}>
                     <Grid item>
                         <Typography variant="h2" style={{marginBottom: '0.5em'}}>Save Energy</Typography>
                         <img src={SaveEnergyIcon} alt="Save Energy Icon" />
                     </Grid>
                 </Grid>
                 <Grid item container direction="column" 
-                    style={{maxWidth: '15em', textAlign: 'center', marginRight: '4em', marginLeft: '4em',  marginTop: matchesMD ? '4em' : '0em', marginBottom: matchesMD ? '4em' : '0em'}}>
+                    style={{maxWidth: '15em', textAlign: 'center', marginRight: matchesSM ? '0em' : '4em', marginLeft: matchesSM ? '2em' : '4em',  marginTop: matchesMD ? '4em' : '0em', marginBottom: matchesMD ? '4em' : '0em'}}>
                     <Grid item>
                         <Typography variant="h2" style={{marginBottom: '0.5em'}}>Save Time</Typography>
                         <img src={SaveTimeIcon} alt="Save Energy Icon" />
                     </Grid>
                 </Grid>
-                <Grid item container direction="column" style={{maxWidth: '15em',marginBottom: '5em', textAlign: 'center'}}>
+                <Grid item container direction="column" style={{maxWidth: '15em' ,marginLeft: matchesSM ? '2em' : '0em' , marginBottom: '5em', textAlign: 'center'}}>
                     <Grid item>
                         <Typography variant="h2" style={{marginBottom: '0.5em'}}>Save Money</Typography>
                         <img src={SaveMoneyIcon} alt="Save Energy Icon" />
@@ -160,10 +171,14 @@ export default function CustomSoftware(props) {
                 </Grid>
             </Grid>
             {/*------THIRD SECTION -------*/}
-            <Grid item container direction={matchesMD ? "column" : "row"} alignItems={matchesMD ? "center" : undefined}
-            style={{marginTop: '5em'}} justify="space-around">
+            <Grid 
+                item container 
+                direction={matchesMD ? "column" : "row"} 
+                alignItems={matchesMD ? "center" : undefined}
+                style={{marginTop: matchesMD ? '2em ' : '5em'}} 
+                justify="space-around">
                 <Grid item container className={classes.itemContainer} md>
-                    <Grid item container direction="column" style={{width: '50%'}} md>
+                    <Grid item container direction="column" style={{width: matchesMD ? '100%' : '50%'}} md>
                         <Typography variant="h4">Digital Documents & Data</Typography>
                         <Typography variant="body1" paragraph>
                             Reduce Errors. Reduce Waste. Reduce Costs.
@@ -187,7 +202,7 @@ export default function CustomSoftware(props) {
                     <Grid item container md className={classes.animation}>
                         <Lottie options={scaleOptions} style={{maxHeight: 260, maxWidth: 280}} />   
                     </Grid>
-                    <Grid item container direction="column" style={{width: '50%'}} md>
+                    <Grid item container direction="column" style={{width: matchesMD ? '100%' : '50%'}} md>
                         <Typography variant="h4" align="right">Scale</Typography>
                         <Typography variant="body1" align="right" paragraph>
                             Whether you’re a large brand, just getting started, or taking off right now, our application architecture ensures pain-free growth and reliability.
@@ -196,10 +211,13 @@ export default function CustomSoftware(props) {
                 </Grid>
             </Grid>
             {/*------FOURTH SECTION -------*/}
-            <Grid item container direction="row" style={{marginTop: '10em', marginBottom: '10em'}}>
+            <Grid 
+                item container 
+                direction="row" 
+                style={{marginTop: matchesMD ? '4em' : '10em', marginBottom:  matchesMD ? '4em' : '10em'}}>
                 <Grid item container direction="column" alignItems="center">
                     <Grid item>
-                        <img src={roots} alt="tree with roots extending out" height="450em" width="450em"/>
+                        <img src={roots} alt="tree with roots extending out" height={matchesMD ? "250em" : "450em"} width={matchesMD ? "250em" : "450em"}/>
                     </Grid>
                     <Grid item className={classes.itemContainer}>
                         <Typography variant="h4" align="center" gutterBottom>
@@ -219,10 +237,10 @@ export default function CustomSoftware(props) {
                 item container 
                 direction={matchesMD ? "column" : "row"} 
                 alignItems={matchesMD ? "center" : undefined} 
-                style={{marginTop: '5em', marginBottom: '10em'}} 
+                style={{marginTop: matchesSM ? '0em' : '5em', marginBottom: '10em'}} 
                 justify="space-around">
                 <Grid item container className={classes.itemContainer} md>
-                    <Grid item container direction="column" style={{width: '50%'}} md>
+                    <Grid item container direction="column" style={{width: matchesMD ? '100%' : '50%'}} md>
                         <Typography variant="h4">Automation</Typography>
                         <Typography variant="body1" paragraph>
                             Why waste time when you don’t have to?
@@ -241,12 +259,11 @@ export default function CustomSoftware(props) {
                 
                 <Grid 
                     item container 
-                    className={classes.itemContainer} md
-                    style={{marginTop: "5em"}}>
+                    className={classes.itemContainer} md>
                     <Grid item container md className={classes.animation}>
                         <Lottie options={UXOptions} style={{maxHeight: 260, maxWidth: 280}} />   
                     </Grid>
-                    <Grid item container direction="column" style={{width: '50%'}} md>
+                    <Grid item container direction="column" style={{width: matchesMD ? '100%' : '50%', marginTop: matchesSM ? '2em' : '0em'}} md>
                         <Typography variant="h4" align="right">User Experience Design</Typography>
                         <Typography variant="body1" align="right" paragraph>
                             A good design that isn’t usable isn’t a good design.
@@ -260,7 +277,8 @@ export default function CustomSoftware(props) {
                     </Grid>
                 </Grid>
             </Grid>
-
         </Grid>
+        <CallToAction />
+        </React.Fragment>
     );
 }
