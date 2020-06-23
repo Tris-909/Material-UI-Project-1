@@ -7,6 +7,7 @@ import {Link}  from 'react-router-dom';
 import backArrow from '../assets/backArrow.svg';
 import fowardArrow from '../assets/forwardArrow.svg';
 import IconButton from '@material-ui/core/IconButton'; 
+import Hidden from '@material-ui/core/Hidden';
 
 import SaveEnergyIcon from '../assets/bulb.svg';
 import SaveTimeIcon from '../assets/stopwatch.svg';
@@ -51,7 +52,7 @@ export default function CustomSoftware(props) {
 
     const defaultOptions = {
         loop: true,
-        autoplay: false,
+        autoplay: true,
         animationData: animationData,
         renderSetting:  {
             preserveAspectRatio: 'xMidYMid slice'
@@ -60,7 +61,7 @@ export default function CustomSoftware(props) {
 
     const scaleOptions = {
         loop: true,
-        autoplay: false,
+        autoplay: true,
         animationData: animationScale,
         renderSetting:  {
             preserveAspectRatio: 'xMidYMid slice'
@@ -69,7 +70,7 @@ export default function CustomSoftware(props) {
 
     const AutoOptions = {
         loop: true,
-        autoplay: false,
+        autoplay: true,
         animationData: WheelAnimation,
         renderSetting:  {
             preserveAspectRatio: 'xMidYMid slice'
@@ -78,7 +79,7 @@ export default function CustomSoftware(props) {
 
     const UXOptions = {
         loop: true,
-        autoplay: false,
+        autoplay: true,
         animationData: UXAnimation,
         renderSetting:  {
             preserveAspectRatio: 'xMidYMid slice'
@@ -88,7 +89,8 @@ export default function CustomSoftware(props) {
     return(
         <Grid container direction="column" className={classes.MainContainer}>
             {/*------FIRST SECTION -------*/}
-            <Grid item container direction="row">
+            <Grid item container direction="row" justify={matchesMD ? 'center' : 'inherit'}>
+                <Hidden mdDown>
                 <Grid 
                     item 
                     className={classes.arrowContainer} 
@@ -100,27 +102,30 @@ export default function CustomSoftware(props) {
                         <img src={backArrow} alt="Back Arrow" />
                     </IconButton>
                 </Grid>
+                </Hidden>
+                
                 <Grid item container direction="column" className={classes.heading}>
                     <Grid item>
-                        <Typography variant="h2">
+                        <Typography variant="h2" align={matchesMD ? 'center' : 'inherit'}>
                             Custom Software Development 
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="body1"  paragraph>
+                        <Typography variant="body1" paragraph align={matchesMD ? 'center' : undefined}>
                             Whether we're replacing old software or inventing new solutions, Arc Development is here to help your business taclke technology.
                         </Typography>
-                        <Typography variant="body1" paragraph>
+                        <Typography variant="body1" paragraph align={matchesMD ? 'center' : undefined}>
                             Using regular commercial software leaves you with a lot of stuff you don't need, without some of the stuff you do need, and ultimately controls the way you work. Without using any software at all risk falling behind competitors and missing out on huge savings from increased efficiency.
                         </Typography>
-                        <Typography variant="body1" paragraph>
+                        <Typography variant="body1" paragraph align={matchesMD ? 'center' : undefined}>
                             Our custom solutions are designed from the ground up with your needs, wants, and goals at the core. This collaborative process produces finely tuned software that is much more effective at improving your workflow and reducing costs than generalized options.
                         </Typography>
-                        <Typography variant="body1" paragraph>
+                        <Typography variant="body1" paragraph align={matchesMD ? 'center' : undefined}>
                             We create exactly what you need.
                         </Typography>
                     </Grid>
                 </Grid>
+                <Hidden mdDown>
                 <Grid item className={classes.arrowContainer}>
                     <IconButton 
                         style={{backgroundColor: 'transparent'}}
@@ -129,9 +134,11 @@ export default function CustomSoftware(props) {
                         <img src={fowardArrow} alt="Foward Arrow" />
                     </IconButton>
                 </Grid>
+                </Hidden>
+
             </Grid>
             {/*------SECOND SECTION -------*/}
-            <Grid item container direction="row" justify="center" style={{marginTop: '5em'}}>
+            <Grid item container direction={matchesMD ? "column" : "row"} alignItems={matchesMD ? "center" : undefined} justify="center" style={{marginTop: '5em'}}>
                 <Grid item container direction="column" style={{maxWidth: '15em', textAlign: 'center'}}>
                     <Grid item>
                         <Typography variant="h2" style={{marginBottom: '0.5em'}}>Save Energy</Typography>
@@ -139,7 +146,7 @@ export default function CustomSoftware(props) {
                     </Grid>
                 </Grid>
                 <Grid item container direction="column" 
-                    style={{maxWidth: '15em', textAlign: 'center', marginRight: '4em', marginLeft: '4em'}}>
+                    style={{maxWidth: '15em', textAlign: 'center', marginRight: '4em', marginLeft: '4em',  marginTop: matchesMD ? '4em' : '0em', marginBottom: matchesMD ? '4em' : '0em'}}>
                     <Grid item>
                         <Typography variant="h2" style={{marginBottom: '0.5em'}}>Save Time</Typography>
                         <img src={SaveTimeIcon} alt="Save Energy Icon" />
@@ -153,7 +160,8 @@ export default function CustomSoftware(props) {
                 </Grid>
             </Grid>
             {/*------THIRD SECTION -------*/}
-            <Grid item container direction="row" style={{marginTop: '5em'}} justify="space-around">
+            <Grid item container direction={matchesMD ? "column" : "row"} alignItems={matchesMD ? "center" : undefined}
+            style={{marginTop: '5em'}} justify="space-around">
                 <Grid item container className={classes.itemContainer} md>
                     <Grid item container direction="column" style={{width: '50%'}} md>
                         <Typography variant="h4">Digital Documents & Data</Typography>
@@ -172,7 +180,10 @@ export default function CustomSoftware(props) {
                     </Grid>
                 </Grid>
                 
-                <Grid item container className={classes.itemContainer} md>
+                <Grid 
+                    item container 
+                    className={classes.itemContainer} md
+                    style={{marginTop: "5em"}}>
                     <Grid item container md className={classes.animation}>
                         <Lottie options={scaleOptions} style={{maxHeight: 260, maxWidth: 280}} />   
                     </Grid>
@@ -204,7 +215,12 @@ export default function CustomSoftware(props) {
                 </Grid>
             </Grid>
             {/*------FIFTH SECTION -------*/}
-            <Grid item container direction="row" style={{marginTop: '5em'}} justify="space-around">
+            <Grid 
+                item container 
+                direction={matchesMD ? "column" : "row"} 
+                alignItems={matchesMD ? "center" : undefined} 
+                style={{marginTop: '5em', marginBottom: '10em'}} 
+                justify="space-around">
                 <Grid item container className={classes.itemContainer} md>
                     <Grid item container direction="column" style={{width: '50%'}} md>
                         <Typography variant="h4">Automation</Typography>
@@ -223,7 +239,10 @@ export default function CustomSoftware(props) {
                     </Grid>
                 </Grid>
                 
-                <Grid item container className={classes.itemContainer} md>
+                <Grid 
+                    item container 
+                    className={classes.itemContainer} md
+                    style={{marginTop: "5em"}}>
                     <Grid item container md className={classes.animation}>
                         <Lottie options={UXOptions} style={{maxHeight: 260, maxWidth: 280}} />   
                     </Grid>

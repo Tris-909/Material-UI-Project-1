@@ -197,6 +197,7 @@ export default function Header(props) {
         } else if (window.location.pathname === "/estimate" && props.isActive !== 5) {
             props.setIsActive(5);
         }  
+        // eslint-disable-next-line
     }, [props.isActive, props.selectedIndex]);
 
     const tabs = (
