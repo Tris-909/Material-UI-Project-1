@@ -38,9 +38,9 @@ const useStyles = makeStyles((theme) => ({
 export default function WebsitesDev(props) {
     const classes = useStyles();
     const theme = useTheme();
-    // const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
-    // const matchesSM = useMediaQuery(theme.breakpoinvats.down("sm"));
-    // const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
+    const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
+    const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+    const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
     
     return(
         <React.Fragment>
@@ -90,7 +90,7 @@ export default function WebsitesDev(props) {
                 </Grid>
 
                 {/*--------- SECOND SECTION -------*/}
-                <Grid item container direction="column">
+                <Grid item container direction="column" style={{marginTop: matchesXS ? '5em' : '10em'}}>
                     <Grid item style={{marginLeft: '2.5em', marginBottom: '1em'}}>
                         <Typography variant="h4">
                             Analytics
@@ -109,13 +109,14 @@ export default function WebsitesDev(props) {
                 </Grid>
 
                 {/*--------- THIRD SECTION -------*/}
-                <Grid item container direction="column">
+                <Grid item container direction="column" style={{marginTop: matchesXS ? '5em' : '10em'}}>
                     <Grid item>
-                        <Typography variant="h4" align="right" style={{marginRight: '19em', marginBottom: '1em'}}>
+                        <Typography variant="h4" align={matchesMD ? "flex-start" : "center"} 
+                        style={{marginLeft: matchesMD ? '1em' : '4em' ,marginBottom: '1em'}}>
                             E-Commerce
                         </Typography>
                     </Grid>
-                    <Grid item container direction="row" justify="flex-end">
+                    <Grid item container direction="row" justify={matchesMD ? undefined : "flex-end"}>
                         <Grid item>
                             <img src={ECommerce} alt="ECommerce Icon" />
                         </Grid>
@@ -131,7 +132,7 @@ export default function WebsitesDev(props) {
                 </Grid>
 
                 {/*--------- FOURTH SECTION -------*/}
-                <Grid item container direction="column">
+                <Grid item container direction="column" style={{marginTop: matchesXS ? '5em' : '10em'}}>
                     <Grid item style={{marginLeft: '2.5em', marginBottom: '1em'}}>
                         <Typography variant="h4">
                             Outreach
@@ -150,13 +151,14 @@ export default function WebsitesDev(props) {
                 </Grid>
 
                 {/*--------- FIFTH   SECTION -------*/}
-                <Grid item container direction="column">
+                <Grid item container direction="column" style={{marginTop: matchesXS ? '5em' : '10em', marginBottom: '5em'}}>
                     <Grid item>
-                        <Typography variant="h4" align="right" style={{marginRight: '14em', marginBottom: '1em'}}>
+                        <Typography variant="h4" align={matchesMD ? "flex-start" : "center"} 
+                        style={{marginLeft: matchesMD ? '1em' : '4em' ,marginBottom: '1em'}}>
                             Search Engine Optimization
                         </Typography>
                     </Grid>
-                    <Grid item container direction="row" justify="flex-end">
+                    <Grid item container direction="row" justify={matchesMD ? undefined : "flex-end"}>
                         <Grid item>
                             <img src={SEOIcon} alt="SEO Icon" />
                         </Grid>
