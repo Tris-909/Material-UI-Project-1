@@ -29,6 +29,32 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down("xs")]: {
             padding: '2em 1em 2em 1em'
         }
+    }, 
+    Revo1: {
+        ...theme.typography.Revo,
+        color: 'black'
+    },
+    Background1: {
+        backgroundColor: theme.palette.common.gray,
+        padding: '2em 5em 10em 5em',
+        [theme.breakpoints.down("xs")]: {
+            padding: '2em 1em 2em 1em'
+        },
+        height: '60em'
+    },
+    Background2: {
+        backgroundColor: theme.palette.common.pink,
+        padding: '2em 5em 10em 5em',
+        [theme.breakpoints.down("xs")]: {
+            padding: '2em 1em 2em 1em'
+        },
+        height: '60em'
+    },
+    RevoText: {
+        ...theme.typography.body3
+    },
+    RevotitleSpace: {
+        maxWidth: '20em'
     }
 }));
 
@@ -117,9 +143,53 @@ export default function Revolution(props) {
                     <Typography variant="h4"> 
                         Process
                     </Typography>
-                    
                 </Grid>
+            </Grid>
+            
+            {/* THIRD SECTION */}
+            <Grid item container direction="row" align="center" justify="center" className={classes.Background1}>
+                <Grid item container direction="column" lg align="left" style={{marginTop: '3em'}} className={classes.RevotitleSpace}>
+                    <Grid item>
+                        <Typography className={classes.Revo1}>Consultation</Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography className={classes.RevoText} paragraph>
+                            Our process begins the moment you realize you need a piece of technology for your business. Whether you already have an idea for where to start and what to do, or if you just know you want to step things up, our initial consultation will help you examine your business holistically to find the best solutions.
+                        </Typography>
+                        <Typography className={classes.RevoText} paragraph>
+                            Detailed notes will be taken on your requirements and constraints, while taking care to identify other potential areas for consideration.
+                        </Typography>
+                        <Typography className={classes.RevoText} paragraph>
+                            Cutting-edge advancements in machine learning like object detection and natural language processing allow computers to do things previously unimaginable, and our expertise and intuition will help usher you into this new future of possibilities.
+                        </Typography>
+                    </Grid>
+                </Grid> 
+                <Grid item lg style={{alignSelf: 'center'}}> 
+                    <img src={ConsultantIcon} alt="Consultant Icon"/>
+                </Grid>
+            </Grid>
 
+            {/* FOURTH SECTION */}
+            <Grid item container direction="row" align="center" justify="center" className={classes.Background2}>
+                <Grid item container direction="column" lg align="left" style={{marginTop: '3em'}} className={classes.RevotitleSpace}>
+                    <Grid item>
+                        <Typography className={classes.Revo1}>Mock Up</Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography className={classes.RevoText} paragraph>
+                            After we settle on the best path forward and decide on a solution to pursue, details like the cost and timeline will be finalized.
+                        </Typography>
+                        <Typography className={classes.RevoText} paragraph>
+                            Then it’s time for us to start on your minimum viable product. That’s just a fancy term for a mockup, which doesn’t include colors, images, or any other polished design elements, but captures the essential layout structure and functionality.
+                        </Typography>
+                        <Typography className={classes.RevoText} paragraph>
+                            This helps us understand and refine the solution itself before getting distracted by specifics and looks.
+                        </Typography>
+                    </Grid>
+                </Grid> 
+                <Grid item lg style={{alignSelf: 'center'}}> 
+                    <img src={MockUpIcon} alt="MockUp Icon"/>
+                </Grid>
             </Grid>
         </React.Fragment>
     );

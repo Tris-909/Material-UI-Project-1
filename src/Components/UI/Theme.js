@@ -5,6 +5,7 @@ const arcOrange = "#FFB860";
 const arcGray = "#868686";
 const arcWhite = "#ffffff";
 const arcLightBlue = "#08deff";
+const arcPink = "#FF7373";
 
 export default createMuiTheme({
     palette: {
@@ -12,7 +13,9 @@ export default createMuiTheme({
             blue: `${arcBlue}`,
             orange: `${arcOrange}`,
             white: arcWhite,
-            lightBlue: arcLightBlue
+            lightBlue: arcLightBlue,
+            gray: arcGray,
+            pink: arcPink
         },
         primary: {
             main: `${arcBlue}`
@@ -78,9 +81,14 @@ export default createMuiTheme({
             fontWeight: 300
         },
         body3: {
-            fontSize: '0.875em',
-            color: arcGray,
+            fontSize: '1em',
+            color: 'white',
             fontWeight: 300
+        },
+        Revo: {
+            fontFamily:  'Raleway',
+            fontSize: '2.25rem',
+            fontWeight: 700
         }
     }
 });
