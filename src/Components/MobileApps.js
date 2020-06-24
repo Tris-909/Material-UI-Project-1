@@ -17,7 +17,6 @@ import Tools from '../assets/swissKnife.svg';
 import Menu from '../assets/extendAccess.svg';
 import IncEngage from '../assets/increaseEngagement.svg';
 
-
 import CallToAction from './UI/CallToAction';
 
 const useStyles = makeStyles(theme => ({
@@ -45,7 +44,7 @@ export default function MobileDevelopment(props) {
 
     return(
         <React.Fragment>
-            <Grid container direction='column'  className={classes.MainContainer}>
+            <Grid item container direction='column'  className={classes.MainContainer}>
                 {/*--------- FIRST SECTION -------*/}
                 <Grid item container direction="row">
                     <Hidden mdDown>

@@ -8,6 +8,7 @@ import LandingPage from '../Components/LandingPage';
 import Services from './Services';
 import CustomSoftware from './CustomSoftware';
 import MobileApps from './MobileApps';
+import WebsitesDev from './WebsitesDev';
 
 function App() {
   const [isActive,setIsActive] = useState(0); // This control which tab is actived and add CSS to it
@@ -22,7 +23,7 @@ function App() {
           <Route exact path="/services" render={(props) => <Services {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex} />}/>
           <Route exact path="/customsoftware" render={(props) => <CustomSoftware {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex} />}/>
           <Route exact path="/mobileapps" render={(props) => <MobileApps {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex}/>} />
-          <Route exact path="/websites" component={() => <div>Websites</div>}/>
+          <Route exact path="/websites" render={(props) => <WebsitesDev {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex}/>} />
           <Route exact path="/revolution" component={() => <div>The Revolution</div>}/>
           <Route exact path="/about" component={() => <div>About Us</div>}/>
           <Route exact path="/contact" component={() => <div>Contact</div>}/>
