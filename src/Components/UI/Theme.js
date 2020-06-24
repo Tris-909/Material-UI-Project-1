@@ -6,16 +6,28 @@ const arcGray = "#868686";
 const arcWhite = "#ffffff";
 const arcLightBlue = "#08deff";
 const arcPink = "#FF7373";
+const arcGreen = "#39B54A";
+const arcBrown = "#A67C52";
+const arcYellow = "#FBB03B";
+const arcRed = "#C1272D";
+const arcPurple = "#8E45CE";
+const arcLBlue = "#29ABE2";
 
 export default createMuiTheme({
     palette: {
         common: {
-            blue: `${arcBlue}`,
-            orange: `${arcOrange}`,
+            blue: arcBlue,
+            orange: arcOrange,
             white: arcWhite,
             lightBlue: arcLightBlue,
             gray: arcGray,
-            pink: arcPink
+            pink: arcPink,
+            green: arcGreen,
+            brown: arcBrown,
+            yellow: arcYellow,
+            red: arcRed,
+            purple: arcPurple,
+            skyblue: arcLightBlue
         },
         primary: {
             main: `${arcBlue}`
