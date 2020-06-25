@@ -34,69 +34,15 @@ const useStyles = makeStyles(theme => ({
         ...theme.typography.Revo,
         color: 'black'
     },
-    Background1: {
-        backgroundColor: theme.palette.common.gray,
+    Background: {
         padding: '2em 5em 10em 5em',
+        height: '60em',
+        [theme.breakpoints.down("md")]: {
+            height: '100%'
+        },
         [theme.breakpoints.down("xs")]: {
             padding: '2em 1em 2em 1em'
-        },
-        height: '60em'
-    },
-    Background2: {
-        backgroundColor: theme.palette.common.pink,
-        padding: '2em 5em 10em 5em',
-        [theme.breakpoints.down("xs")]: {
-            padding: '2em 1em 2em 1em'
-        },
-        height: '60em'
-    },
-    Background3: {
-        backgroundColor: theme.palette.common.green,
-        padding: '2em 5em 10em 5em',
-        [theme.breakpoints.down("xs")]: {
-            padding: '2em 1em 2em 1em'
-        },
-        height: '60em'
-    },
-    Background4: {
-        backgroundColor: theme.palette.common.brown,
-        padding: '2em 5em 10em 5em',
-        [theme.breakpoints.down("xs")]: {
-            padding: '2em 1em 2em 1em'
-        },
-        height: '60em'
-    },
-    Background5: {
-        backgroundColor: theme.palette.common.yellow,
-        padding: '2em 5em 10em 5em',
-        [theme.breakpoints.down("xs")]: {
-            padding: '2em 1em 2em 1em'
-        },
-        height: '60em'
-    },
-    Background6: {
-        backgroundColor: theme.palette.common.red,
-        padding: '2em 5em 10em 5em',
-        [theme.breakpoints.down("xs")]: {
-            padding: '2em 1em 2em 1em'
-        },
-        height: '60em'
-    },
-    Background7: {
-        backgroundColor: theme.palette.common.purple,
-        padding: '2em 5em 10em 5em',
-        [theme.breakpoints.down("xs")]: {
-            padding: '2em 1em 2em 1em'
-        },
-        height: '60em' 
-    },
-    Background8: {
-        backgroundColor: theme.palette.common.skyblue,
-        padding: '2em 5em 10em 5em',
-        [theme.breakpoints.down("xs")]: {
-            padding: '2em 1em 2em 1em'
-        },
-        height: '60em' 
+        }
     },
     RevoText: {
         ...theme.typography.body3
@@ -110,40 +56,48 @@ export default function Revolution(props) {
     const classes = useStyles();
     const theme = useTheme();
 
+    const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
+    const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+    const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
+
     return(
         <React.Fragment>
             <Grid item container direction="column" className={classes.MainContainer}>
                 {/* FIRST SECTION */}
-                <Grid item style={{marginBottom: '10em'}}>
+                <Grid item style={{marginBottom: matchesSM ? '3em' : '10em'}}>
                     <Typography variant="h3">
                         The Revolution
                     </Typography>
                 </Grid>
 
-                <Grid item container direction="row" style={{marginBottom: '10em'}}>
-                    <Grid item md>
-                        <img src={VisionIcon} alt="Vision Icon" />
+                <Grid item container direction={matchesMD ? "column" : "row"} style={{marginBottom: matchesXS ? '1em' : '10em'}}>
+                    <Grid item md width="100%">
+                        <img src={VisionIcon} alt="Vision Icon" width={matchesXS ? '90%' : undefined}/>
                     </Grid>
-                    <Grid item container direction="column" style={{marginLeft: '5em'}} md>
+                    <Grid 
+                        item container 
+                        direction="column" 
+                        style={{marginLeft: matchesXS ? undefined : '5em', width: matchesMD ? '100%' : undefined}} 
+                        md>
                         <Grid item>
-                            <Typography variant="h4" align="right">
+                            <Typography variant="h4" align={matchesMD ? undefined : 'right'}>
                                 Vision
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Typography variant="body2" align="right" paragraph>
+                            <Typography variant="body2" align={matchesMD ? undefined : 'right'} paragraph>
                                 The rise of computers, and subsequently the Internet, has completely altered every aspect of human life. This has increased our comfort, broadened our connections, and reshaped how we view the world.
                             </Typography>
-                            <Typography variant="body2" align="right" paragraph>
+                            <Typography variant="body2" align={matchesMD ? undefined : 'right'} paragraph>
                                 What once was confined to huge rooms and teams of engineers now resides in every single one of our hands. Harnessing this unlimited potential by using it to solve problems and better lives is at the heart of everything we do.  
                             </Typography>
-                            <Typography variant="body2" align="right" paragraph>
+                            <Typography variant="body2" align={matchesMD ? undefined : 'right'} paragraph>
                                 We want to help businesses capitalize on the latest and greatest technology. The best way to predict the future is to be the one building it, and we want to help guide the world into this next chapter of technological expansion, exploration, and innovation.
                             </Typography>
-                            <Typography variant="body2" align="right" paragraph>
+                            <Typography variant="body2" align={matchesMD ? undefined : 'right'} paragraph>
                                 By holding ourselves to rigorous standards and pristine quality, we can ensure you have the absolute best tools necessary to thrive in this new frontier.
                             </Typography>
-                            <Typography variant="body2" align="right" paragraph>
+                            <Typography variant="body2" align={matchesMD ? undefined : 'right'} paragraph>
                                 We see a future where every individual has personalized software custom tailored to their lifestyle, culture, and interests, helping them overcome life’s obstacles. Each project is a step towards that goal.
                             </Typography>
                         </Grid>
@@ -151,8 +105,9 @@ export default function Revolution(props) {
                 </Grid>
 
                 {/* SECOND SECTION */}
-                <Grid item container direction="row" style={{marginTop: '5em'}}>
-                    <Grid item container direction="column" md>
+                <Grid item container direction="row" style={{marginTop: matchesXS ? '2em' : '5em'}}>
+                    <Grid 
+                    item container direction="column" md style={{marginBottom: matchesSM ? '3em' : undefined}}>
                         <Grid item style={{marginBottom: '3em'}}>
                             <Typography variant="h4">
                                 Technology
@@ -182,8 +137,8 @@ export default function Revolution(props) {
                             </Typography>    
                         </Grid>
                     </Grid>
-                    <Grid item md style={{marginLeft: '5em'}}>
-                        <img src={HammerIcon} alt="Technology Icon" />
+                    <Grid item md style={{marginLeft: matchesXS ? undefined : '5em'}}>
+                        <img src={HammerIcon} alt="Technology Icon" width={matchesMD ? '90%' : undefined}/>
                     </Grid>
                 </Grid>
 
@@ -195,8 +150,17 @@ export default function Revolution(props) {
             </Grid>
             
             {/* THIRD SECTION */}
-            <Grid item container direction="row" align="center" justify="center" className={classes.Background1}>
-                <Grid item container direction="column" lg align="left" style={{marginTop: '3em'}} className={classes.RevotitleSpace}>
+            <Grid 
+                item container 
+                direction={matchesMD ? "column" : "row"} 
+                align="center" justify={matchesXS ? "undefined" : "center"}  
+                className={classes.Background}
+                style={{backgroundColor: theme.palette.common.gray}}>
+                <Grid 
+                    item container 
+                    direction="column" lg align="left" 
+                    style={{marginTop: '3em', marginBottom: matchesSM ? '3em' : undefined}} 
+                    className={classes.RevotitleSpace}>
                     <Grid item>
                         <Typography className={classes.Revo1}>Consultation</Typography>
                     </Grid>
@@ -213,13 +177,22 @@ export default function Revolution(props) {
                     </Grid>
                 </Grid> 
                 <Grid item lg style={{alignSelf: 'center'}}> 
-                    <img src={ConsultantIcon} alt="Consultant Icon"/>
+                    <img src={ConsultantIcon} alt="Consultant Icon" width={matchesMD ? '90%' : undefined}/>
                 </Grid>
             </Grid>
 
             {/* FOURTH SECTION */}
-            <Grid item container direction="row" align="center" justify="center" className={classes.Background2}>
-                <Grid item container direction="column" lg align="left" style={{marginTop: '3em'}} className={classes.RevotitleSpace}>
+            <Grid 
+                item container 
+                direction={matchesMD ? "column" : "row"} 
+                align="center" justify={matchesXS ? "undefined" : "center"}  
+                className={classes.Background}
+                style={{backgroundColor: theme.palette.common.pink}}>
+                <Grid 
+                    item container 
+                    direction="column" lg align="left" 
+                    style={{marginTop: '3em', marginBottom: matchesSM ? '3em' : undefined}} 
+                    className={classes.RevotitleSpace}>
                     <Grid item>
                         <Typography className={classes.Revo1}>Mock Up</Typography>
                     </Grid>
@@ -236,13 +209,22 @@ export default function Revolution(props) {
                     </Grid>
                 </Grid> 
                 <Grid item lg style={{alignSelf: 'center'}}> 
-                    <img src={MockUpIcon} alt="MockUp Icon"/>
+                    <img src={MockUpIcon} alt="MockUp Icon" width={matchesMD ? '90%' : undefined}/>
                 </Grid>
             </Grid>
 
             {/* FIFTH SECTION */}
-            <Grid item container direction="row" align="center" justify="center" className={classes.Background3}>
-                <Grid item container direction="column" lg align="left" style={{marginTop: '3em'}} className={classes.RevotitleSpace}>
+            <Grid 
+                item container 
+                direction={matchesMD ? "column" : "row"} 
+                align="center" justify={matchesXS ? "undefined" : "center"} 
+                className={classes.Background}
+                style={{backgroundColor: theme.palette.common.green}}>
+                <Grid 
+                    item container 
+                    direction="column" lg align="left" 
+                    style={{marginTop: '3em', marginBottom: matchesSM ? '3em' : undefined}} 
+                    className={classes.RevotitleSpace}>
                     <Grid item>
                         <Typography className={classes.Revo1}>Review</Typography>
                     </Grid>
@@ -259,13 +241,22 @@ export default function Revolution(props) {
                     </Grid>
                 </Grid> 
                 <Grid item lg style={{alignSelf: 'center'}}> 
-                    <img src={ReviewIcon} alt="MockUp Icon"/>
+                    <img src={ReviewIcon} alt="MockUp Icon" width={matchesMD ? '90%' : undefined}/>
                 </Grid>
             </Grid>
 
             {/* SIXTH SECTION */}
-            <Grid item container direction="row" align="center" justify="center" className={classes.Background4}>
-                <Grid item container direction="column" lg align="left" style={{marginTop: '3em'}} className={classes.RevotitleSpace}>
+            <Grid 
+                item container 
+                direction={matchesMD ? "column" : "row"} 
+                align="center" justify={matchesXS ? "undefined" : "center"}  
+                className={classes.Background}
+                style={{backgroundColor: theme.palette.common.brown}}>
+                <Grid 
+                    item container 
+                    direction="column" lg align="left" 
+                    style={{marginTop: '3em', marginBottom: matchesSM ? '3em' : undefined}} 
+                    className={classes.RevotitleSpace}>
                     <Grid item>
                         <Typography className={classes.Revo1}>Design</Typography>
                     </Grid>
@@ -279,13 +270,22 @@ export default function Revolution(props) {
                     </Grid>
                 </Grid> 
                 <Grid item lg style={{alignSelf: 'center'}}> 
-                    <img src={DesignIcon} alt="MockUp Icon"/>
+                    <img src={DesignIcon} alt="MockUp Icon" width={matchesMD ? '90%' : undefined}/>
                 </Grid>
             </Grid>
 
             {/* SEVENTH SECTION */}
-            <Grid item container direction="row" align="center" justify="center" className={classes.Background3}>
-                <Grid item container direction="column" lg align="left" style={{marginTop: '3em'}} className={classes.RevotitleSpace}>
+            <Grid 
+                item container 
+                direction={matchesMD ? "column" : "row"} 
+                align="center" justify={matchesXS ? "undefined" : "center"}   
+                className={classes.Background}
+                style={{backgroundColor: theme.palette.common.green}}>
+                <Grid 
+                    item container 
+                    direction="column" lg align="left" 
+                    style={{marginTop: '3em', marginBottom: matchesSM ? '3em' : undefined}} 
+                    className={classes.RevotitleSpace}>
                     <Grid item>
                         <Typography className={classes.Revo1}>Review</Typography>
                     </Grid>
@@ -299,13 +299,22 @@ export default function Revolution(props) {
                     </Grid>
                 </Grid> 
                 <Grid item lg style={{alignSelf: 'center'}}> 
-                    <img src={ReviewIcon} alt="MockUp Icon"/>
+                    <img src={ReviewIcon} alt="MockUp Icon" width={matchesMD ? '90%' : undefined}/>
                 </Grid>
             </Grid>
 
             {/* EIGTH SECTION */}
-            <Grid item container direction="row" align="center" justify="center" className={classes.Background5}>
-                <Grid item container direction="column" lg align="left" style={{marginTop: '3em'}} className={classes.RevotitleSpace}>
+            <Grid 
+                item container 
+                direction={matchesMD ? "column" : "row"} 
+                align="center" justify={matchesXS ? "undefined" : "center"}  
+                className={classes.Background}
+                style={{backgroundColor: theme.palette.common.yellow}}>
+                <Grid 
+                    item container 
+                    direction="column" lg align="left" 
+                    style={{marginTop: '3em', marginBottom: matchesSM ? '3em' : undefined}} 
+                    className={classes.RevotitleSpace}>
                     <Grid item>
                         <Typography className={classes.Revo1}>Build</Typography>
                     </Grid>
@@ -331,14 +340,23 @@ export default function Revolution(props) {
                     </Grid>
                 </Grid> 
                 <Grid item lg style={{alignSelf: 'center'}}> 
-                    <img src={BuildIcon} alt="MockUp Icon"/>
+                    <img src={BuildIcon} alt="MockUp Icon" width={matchesMD ? '90%' : undefined}/>
                 </Grid>
             </Grid>            
 
 
             {/* NINE SECTION */}
-            <Grid item container direction="row" align="center" justify="center" className={classes.Background6}>
-                <Grid item container direction="column" lg align="left" style={{marginTop: '3em'}} className={classes.RevotitleSpace}>
+            <Grid 
+                item container 
+                direction={matchesMD ? "column" : "row"} 
+                align="center" justify={matchesXS ? "undefined" : "center"}  
+                className={classes.Background}
+                style={{backgroundColor: theme.palette.common.red}}>
+                <Grid 
+                    item container 
+                    direction="column" lg align="left" 
+                    style={{marginTop: '3em', marginBottom: matchesSM ? '3em' : undefined}} 
+                    className={classes.RevotitleSpace}>
                     <Grid item>
                         <Typography className={classes.Revo1}>Launch</Typography>
                     </Grid>
@@ -355,14 +373,23 @@ export default function Revolution(props) {
                     </Grid>
                 </Grid> 
                 <Grid item lg style={{alignSelf: 'center'}}> 
-                    <img src={LaunchIcon} alt="MockUp Icon"/>
+                    <img src={LaunchIcon} alt="MockUp Icon" width={matchesMD ? '90%' : undefined}/>
                 </Grid>
             </Grid>
 
 
             {/* 10TH SECTION */}
-            <Grid item container direction="row" align="center" justify="center" className={classes.Background7}>
-                <Grid item container direction="column" lg align="left" style={{marginTop: '3em'}} className={classes.RevotitleSpace}>
+            <Grid 
+                item container 
+                direction={matchesMD ? "column" : "row"} 
+                align="center" justify={matchesXS ? "undefined" : "center"}  
+                className={classes.Background}
+                style={{backgroundColor: theme.palette.common.purple}}>
+                <Grid 
+                    item container 
+                    direction="column" lg align="left" 
+                    style={{marginTop: '3em', marginBottom: matchesSM ? '3em' : undefined}} 
+                    className={classes.RevotitleSpace}>
                     <Grid item>
                         <Typography className={classes.Revo1}>Maintain</Typography>
                     </Grid>
@@ -379,13 +406,23 @@ export default function Revolution(props) {
                     </Grid>
                 </Grid> 
                 <Grid item lg style={{alignSelf: 'center'}}> 
-                    <img src={MaintainIcon} alt="MockUp Icon"/>
+                    <img src={MaintainIcon} alt="MockUp Icon" width={matchesMD ? '90%' : undefined}/>
                 </Grid>
             </Grid>
 
             {/* 11TH SECTION */}
-            <Grid item container direction="row" align="center" justify="center" className={classes.Background8}>
-                <Grid item container direction="column" lg align="left" style={{marginTop: '3em'}} className={classes.RevotitleSpace}>
+            <Grid 
+                item container 
+                direction={matchesMD ? "column" : "row"} 
+                align="center" justify={matchesXS ? "undefined" : "center"} 
+                className={classes.Background}
+                style={{backgroundColor: theme.palette.common.skyblue}}>
+                <Grid 
+                    item container 
+                    direction="column" lg 
+                    align="left" 
+                    style={{marginTop: '3em', marginBottom: matchesSM ? '3em' : undefined}} 
+                    className={classes.RevotitleSpace}>
                     <Grid item>
                         <Typography className={classes.Revo1}>Iterate</Typography>
                     </Grid>
@@ -402,7 +439,7 @@ export default function Revolution(props) {
                     </Grid>
                 </Grid> 
                 <Grid item lg style={{alignSelf: 'center'}}> 
-                    <img src={IterateIcon} alt="MockUp Icon"/>
+                    <img src={IterateIcon} alt="MockUp Icon" width={matchesMD ? '90%' : undefined}/>
                 </Grid>
             </Grid>            
 
