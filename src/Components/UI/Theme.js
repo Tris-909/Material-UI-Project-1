@@ -27,7 +27,7 @@ export default createMuiTheme({
             yellow: arcYellow,
             red: arcRed,
             purple: arcPurple,
-            skyblue: arcLightBlue
+            skyblue: arcLBlue
         },
         primary: {
             main: `${arcBlue}`
@@ -95,6 +95,11 @@ export default createMuiTheme({
         body3: {
             fontSize: '1em',
             color: 'white',
+            fontWeight: 300
+        },
+        body4: {
+            fontSize: '1em',
+            color: arcLBlue,
             fontWeight: 300
         },
         Revo: {

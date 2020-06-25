@@ -1,14 +1,10 @@
 import React from 'react';
 
-import Button from '@material-ui/core/Button';
-
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-
-import {Link} from 'react-router-dom';
 
 import VisionIcon from '../assets/vision.svg';
 import HammerIcon from '../assets/Screen Shot 2019-05-22 at 12.46.03 AM.svg';
@@ -83,7 +79,7 @@ export default function Revolution(props) {
                             <Typography variant="h4" align={matchesMD ? undefined : 'right'}>
                                 Vision
                             </Typography>
-                        </Grid>
+                        </Grid> 
                         <Grid item>
                             <Typography variant="body2" align={matchesMD ? undefined : 'right'} paragraph>
                                 The rise of computers, and subsequently the Internet, has completely altered every aspect of human life. This has increased our comfort, broadened our connections, and reshaped how we view the world.
