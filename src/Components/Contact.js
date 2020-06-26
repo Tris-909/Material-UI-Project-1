@@ -12,6 +12,9 @@ import background from '../assets/background.jpg';
 import phoneIcon from '../assets/phone.svg';
 import emailIcon from '../assets/email.svg';
 import airplane from '../assets/send.svg';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+
 
 const useStyles = makeStyles(theme => ({
     background: {
@@ -53,7 +56,7 @@ const useStyles = makeStyles(theme => ({
     },
     Message: {
         border: `2px solid ${theme.palette.common.blue}`,
-        marginTop: '5em',
+        
         borderRadius: 5
     },
     sendButton: {
@@ -72,25 +75,54 @@ const useStyles = makeStyles(theme => ({
 export default function Contact(props) {
     const classes = useStyles();
     const theme = useTheme(); 
+
     const [name,setName] = useState('');
+
     const [email,setEmail] = useState('');
+    const [emailHelper,setEmailHelper] = useState("");
+
     const [phone,setPhone] = useState(''); 
+    const [phoneHelper,setPhoneHelper] = useState("");
+
     const [message, setMessage] = useState('');
+
+    const [open,setOpen] = useState(false);
 
     const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
     const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
     const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
+    const onChange = event => {
+        let valid;
+
+        switch(event.target.id) {
+            case'email':
+                setEmail(event.target.value);
+                valid = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(event.target.value);
+                if (!valid) {
+                    setEmailHelper("Invalid Email");
+                } else {
+                    setEmailHelper("");
+                }
+
+                break;
+            case('phone'): 
+                setPhone(event.target.value);
+                valid = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(event.target.value);
+                if (!valid) {
+                    setPhoneHelper("Invalid PhoneNumber");
+                } else {
+                    setPhoneHelper('');
+                }
+
+                break;
+            default: 
+                break;
+        }
+    }
+
     const onNameChangeHandler = (event) => {
         setName(event.target.value);
-    }
-
-    const onEmailChangeHandler = (event) => {
-        setEmail(event.target.value);
-    }
-
-    const onPhoneChangeHandler = (event) => {
-        setPhone(event.target.value);
     }
 
     const onMessageChangeHandler = (event) => {
@@ -118,7 +150,9 @@ export default function Contact(props) {
                         <img src={phoneIcon} alt="phone"style={{marginRight: '0.5em'}}/>
                     </Grid>
                     <Grid item>
-                        <Typography variant="body1" style={{color: theme.palette.common.blue, fontSize: '1rem'}}>(555) 555-5555</Typography>
+                        <Typography variant="body1" style={{color: theme.palette.common.blue, fontSize: '1rem'}}>
+                            <a href="tel:(+61)04159850410" style={{textDecoration: 'none', color: 'inherit'}}> (+61) 041 59850 410</a> 
+                        </Typography>
                     </Grid>
                 </Grid>
                 <Grid item container style={{marginBottom: '2em'}}>
@@ -126,28 +160,57 @@ export default function Contact(props) {
                         <img src={emailIcon} alt="email" style={{marginRight: '0.5em', verticalAlign: "bottom"}}/>
                     </Grid>
                     <Grid item>
-                        <Typography variant="body1" style={{color: theme.palette.common.blue, fontSize: '1rem'}}>tranminhtri9090@gmail.com</Typography>
+                        <Typography variant="body1" style={{color: theme.palette.common.blue, fontSize: '1rem'}}>
+                            <a href="mailto: tranminhtri9090@gmail.com" style={{textDecoration: 'none', color: 'inherit'}}> tranminhtri9090@gmail.com</a>
+                        </Typography>
                     </Grid>
                 </Grid>
                 <Grid item container direction="column" style={{maxWidth: "20em"}}>
                     <Grid item style={{marginBottom: '0.5em'}}>
-                        <TextField label="Name" fullWidth id="Name" value={name} onChange={(e) => onNameChangeHandler(e)}/>
+                        <TextField 
+                            label="Name" 
+                            fullWidth 
+                            id="Name" 
+                            value={name} 
+                            onChange={(e) => onNameChangeHandler(e)}/>
                     </Grid>
                     <Grid item style={{marginBottom: '0.5em'}}>
-                        <TextField label="Email" fullWidth id="email" value={email} onChange={(e) => onEmailChangeHandler(e)}/>
+                        <TextField 
+                            label="Email" 
+                            error={emailHelper.length !== 0} 
+                            helperText = {emailHelper}
+                            fullWidth id="email" 
+                            value={email} 
+                            onChange={(e) => onChange(e)}/>
                     </Grid>
                     <Grid item style={{marginBottom: '0.5em'}}>
-                        <TextField label="Phone" fullWidth id="phone" value={phone} onChange={(e) => onPhoneChangeHandler(e)}/>
+                        <TextField 
+                            label="Phone" 
+                            error={phoneHelper.length !== 0} 
+                            helperText = {phoneHelper}
+                            fullWidth id="phone" 
+                            value={phone} 
+                            onChange={(e) => onChange(e)}/>
                     </Grid>
                 </Grid>
                 <Grid item style={{maxWidth: "20em"}}>
                     <TextField value={message} multiline rows={10} 
                     id="message" onChange={(e) => onMessageChangeHandler(e)} 
                     className={classes.Message} fullWidth
-                    InputProps={{disableUnderline: true}}/>
+                    InputProps={{disableUnderline: true}}
+                    style={{marginTop: '5em'}}/>
                 </Grid>
                 <Grid item container  justify="center" style={{marginTop: '2em'}}>
-                    <Button variant="contained" className={classes.sendButton}>
+                    <Button 
+                    disabled={name.length === 0 || 
+                            message.length === 0 || 
+                            phoneHelper.length !== 0 || 
+                            emailHelper.length !== 0 || 
+                            email.length === 0 || 
+                            phone.length === 0} 
+                    variant="contained" 
+                    className={classes.sendButton}
+                    onClick={() => setOpen(true)}>
                         Send Message
                         <img src={airplane} alt="paper airplane" style={{marginLeft: "1em"}}/>
                     </Button>
@@ -155,6 +218,67 @@ export default function Contact(props) {
                     </Grid>
                 </Grid>
             </Grid>
+            <Dialog open={open} onClose={() => setOpen(false)} style={{zIndex: 1302}} 
+                PaperProps={{style: {paddingLeft: matchesMD ? undefined  : '5em', paddingRight: matchesMD ? undefined : '5em'}}}>
+                <DialogContent>
+                    <Grid container direction="column">
+                        <Grid item>
+                            <Typography variant="h4" gutterBottom>
+                                Confirm Message
+                            </Typography>
+                        </Grid>
+                        <Grid item container direction="column" style={{maxWidth: "20em"}}>
+                            <Grid item style={{marginBottom: '0.5em'}}>
+                                <TextField 
+                                label="Name" 
+                                fullWidth 
+                                id="Name" 
+                                value={name} 
+                                onChange={(e) => onNameChangeHandler(e)}/>
+                            </Grid>
+                            <Grid item style={{marginBottom: '0.5em'}}>
+                                <TextField 
+                                label="Email" 
+                                error={emailHelper.length !== 0} 
+                                helperText = {emailHelper}
+                                fullWidth id="email" 
+                                value={email} 
+                                onChange={(e) => onChange(e)}/>
+                            </Grid>
+                            <Grid item style={{marginBottom: '0.5em'}}>
+                            <TextField 
+                                label="Phone" 
+                                error={phoneHelper.length !== 0} 
+                                helperText = {phoneHelper}
+                                fullWidth id="phone" 
+                                value={phone} 
+                                onChange={(e) => onChange(e)}/>
+                            </Grid>
+                        </Grid>
+                        <Grid item style={{maxWidth: matchesSM ? '100%' : "20em"}}>
+                            <TextField value={message} multiline rows={10} 
+                            id="message" onChange={(e) => onMessageChangeHandler(e)} 
+                            className={classes.Message} fullWidth
+                            InputProps={{disableUnderline: true}}
+                            style={{marginTop: '2em'}}/>
+                        </Grid>
+                        </Grid>
+                    <Grid item container justify="space-between" style={{marginTop: '1em'}}>
+                        <Grid item>
+                            <Button color="primary" onClick={() => setOpen(false)}>Cancel</Button>
+                        </Grid>
+                        <Grid item>
+                            <Button color="primary" disabled={name.length === 0 || 
+                                message.length === 0 || 
+                                phoneHelper.length !== 0 || 
+                                emailHelper.length !== 0 || 
+                                email.length === 0 || 
+                                phone.length === 0} 
+                                onClick={() => setOpen(false)}>Continue</Button>
+                        </Grid>
+                    </Grid>
+                </DialogContent>
+            </Dialog>
             <Grid 
                 item 
                 container 
