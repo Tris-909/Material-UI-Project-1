@@ -11,6 +11,8 @@ import MobileApps from './MobileApps';
 import WebsitesDev from './WebsitesDev';
 import Revolution from  './Revolution';
 import AboutUs from './AboutUs';
+import Contact from './Contact';
+
 function App() {
   const [isActive,setIsActive] = useState(0); // This control which tab is actived and add CSS to it
   const [selectedIndex, setSelectedIndex] = useState(0); // Control which MenuItem inside Menu is actived and add CSS to it
@@ -20,14 +22,14 @@ function App() {
       <BrowserRouter>
         <Header isActive={isActive} setIsActive={setIsActive} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
         <Switch>
-          <Route exact path="/" render={(props) => <LandingPage {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex}/>}/>
-          <Route exact path="/services" render={(props) => <Services {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex} />}/>
-          <Route exact path="/customsoftware" render={(props) => <CustomSoftware {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex} />}/>
+          <Route exact path="/" render={(props) => <LandingPage {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex}/>} />
+          <Route exact path="/services" render={(props) => <Services {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex} />} />
+          <Route exact path="/customsoftware" render={(props) => <CustomSoftware {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex} />} />
           <Route exact path="/mobileapps" render={(props) => <MobileApps {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex}/>} />
           <Route exact path="/websites" render={(props) => <WebsitesDev {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex}/>} />
           <Route exact path="/revolution" render={(props) => <Revolution {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex}/>} />
           <Route exact path="/about" render={(props) => <AboutUs {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex}/>} />
-          <Route exact path="/contact" component={() => <div>Contact</div>}/>
+          <Route exact path="/contact" render={(props) => <Contact {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex}/>} />
           <Route exact path="/estimate" component={() => <div>Estimate</div>}/>
         </Switch>
         <Footer isActive={isActive} setIsActive={setIsActive} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
