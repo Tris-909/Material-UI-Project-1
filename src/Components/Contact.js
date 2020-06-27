@@ -14,7 +14,9 @@ import emailIcon from '../assets/email.svg';
 import airplane from '../assets/send.svg';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-
+import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const useStyles = makeStyles(theme => ({
     background: {
@@ -88,6 +90,10 @@ export default function Contact(props) {
 
     const [open,setOpen] = useState(false);
 
+    const [loading,setLoading] = useState(false);
+
+    const [alert, setAlert] = useState({open: false, message: '', backgroundColor: ''});
+
     const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
     const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
     const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
@@ -128,6 +134,45 @@ export default function Contact(props) {
     const onMessageChangeHandler = (event) => {
         setMessage(event.target.value);
     }
+
+    const onConfirm = () => {
+        setLoading(true);
+        axios.get('https://us-central1-arcdev-d9a10.cloudfunctions.net/sendMail',
+        {params: {
+            name: name,
+            email: email,
+            phone: phone,
+            message: message
+        }}
+        ).then(res => {
+            setLoading(false);
+            setOpen(false);
+            setName('');
+            setEmail('');
+            setPhone('');
+            setMessage(''); 
+            setAlert({
+                open: true,
+                message: 'message sent successfully',
+                backgroundColor: '#4BB543'
+            });
+            console.log(res);
+        }).catch(err => {
+            setLoading(false);
+            setAlert({
+                open: true,
+                message: 'Failed to sent message, please try again',
+                backgroundColor: '#FF3232'
+            });
+            console.log(err);
+        });
+    }
+
+    let content = (
+        <React.Fragment>
+            Continue
+        </React.Fragment>
+    );
 
     return(
         <Grid item container direction="row">
@@ -274,11 +319,18 @@ export default function Contact(props) {
                                 emailHelper.length !== 0 || 
                                 email.length === 0 || 
                                 phone.length === 0} 
-                                onClick={() => setOpen(false)}>Continue</Button>
+                                onClick={onConfirm}> {loading ? <CircularProgress size={30} /> : content } </Button>
                         </Grid>
                     </Grid>
                 </DialogContent>
             </Dialog>
+            <Snackbar 
+                open={alert.open} 
+                message={alert.message} 
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                onClose={() => setAlert({...alert, open:false})}
+                autoHideDuration={4000}
+                ContentProps={{style: {backgroundColor: alert.backgroundColor}}} />
             <Grid 
                 item 
                 container 
