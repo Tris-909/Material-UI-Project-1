@@ -12,6 +12,7 @@ import WebsitesDev from './WebsitesDev';
 import Revolution from  './Revolution';
 import AboutUs from './AboutUs';
 import Contact from './Contact';
+import Estimate from './Estimate';
 
 function App() {
   const [isActive,setIsActive] = useState(0); // This control which tab is actived and add CSS to it
@@ -30,7 +31,7 @@ function App() {
           <Route exact path="/revolution" render={(props) => <Revolution {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex}/>} />
           <Route exact path="/about" render={(props) => <AboutUs {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex}/>} />
           <Route exact path="/contact" render={(props) => <Contact {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex}/>} />
-          <Route exact path="/estimate" component={() => <div>Estimate</div>}/>
+          <Route exact path="/estimate" render={(props) => <Estimate {...props} setIsActive={setIsActive} setSelectedIndex={setSelectedIndex}/>} />
         </Switch>
         <Footer isActive={isActive} setIsActive={setIsActive} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
       </BrowserRouter>
