@@ -183,9 +183,7 @@ export default function Header(props) {
             props.setIsActive(3);
         } else if (window.location.pathname === "/contact" && props.isActive !== 4) {
             props.setIsActive(4);
-        } else if (window.location.pathname === "/estimate" && props.isActive !== 5) {
-            props.setIsActive(5);
-        } else if (window.location.pathname === "/customsoftware" && props.isActive !== 1) {
+        }  else if (window.location.pathname === "/customsoftware" && props.isActive !== 1) {
             props.setIsActive(1);
             props.setSelectedIndex(1);
         } else if (window.location.pathname === "/mobileapps" && props.isActive !== 1) {
@@ -194,9 +192,7 @@ export default function Header(props) {
         } else if (window.location.pathname === "/websites" && props.isActive !== 1) {
             props.setIsActive(1);
             props.setSelectedIndex(3);
-        } else if (window.location.pathname === "/estimate" && props.isActive !== 5) {
-            props.setIsActive(5);
-        }  
+        } 
         // eslint-disable-next-line
     }, [props.isActive, props.selectedIndex]);
 
@@ -232,7 +228,7 @@ export default function Header(props) {
                             to="/contact" 
                             label="Contact Us" />
                     </Tabs>
-                    <Button variant="contained" color="secondary" onClick={() => {props.setIsActive(5)}} component={Link} to="/estimate" className={classes.button}>
+                    <Button variant="contained" color="secondary" component={Link} to="/estimate" className={classes.button}>
                         Free Estimate
                     </Button>
                     <Menu 
@@ -286,7 +282,7 @@ export default function Header(props) {
                         <ListItem divider button selected={props.isActive === 4} classes={{selected: classes.drawerItemSelected}} onClick={() => {handlerDrawerClose(); props.setIsActive(4);}} component={Link} to="/contact">
                             <ListItemText className={classes.drawerItem} disableTypography>Contact Us</ListItemText>
                         </ListItem>
-                        <ListItem divider button selected={props.isActive === 5} classes={{root: classes.drawerItemSelected, selected: classes.drawerItem}} onClick={() => {handlerDrawerClose(); props.setIsActive(5);}} component={Link} to="/estimate" className={classes.drawerItemEstimate}>
+                        <ListItem divider button classes={{root: classes.drawerItemSelected, selected: classes.drawerItem}} onClick={() => {handlerDrawerClose()}} component={Link} to="/estimate" className={classes.drawerItemEstimate}>
                             <ListItemText className={classes.drawerItem} disableTypography>Free Estimate</ListItemText>
                         </ListItem>
                     </List>
