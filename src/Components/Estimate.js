@@ -29,8 +29,11 @@ import data from '../assets/data.svg';
 import android from '../assets/android.svg';
 import globe from '../assets/globe.svg';
 import biometrics from '../assets/biometrics.svg';
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
 import estimateAnimation from '../animations/integrationAnimation/estimateAnimation/data.json';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -44,10 +47,21 @@ const useStyles = makeStyles((theme) => ({
         height: 50,
         width: 225,
         fontSize: '1.25rem',
-        marginTop: '3em',
+        marginTop: '1em',
         "&:hover": {
             backgroundColor: theme.palette.secondary.light
         }    
+    },
+    Message: {
+      border: `2px solid ${theme.palette.common.blue}`,
+      
+      borderRadius: 5
+    },
+    specialText: {
+      fontFamily: 'Raleway',
+      fontWeight: 700,
+      fontSize: '1.5rem',
+      color: theme.palette.common.orange
     }
 }));
 
@@ -310,7 +324,30 @@ export default function Estimate() {
     const classes = useStyles();
     const theme = useTheme();
 
+    const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
+    const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+    // eslint-disable-next-line
+    const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
+
     const [questions, setQuestions] = useState(defaultQuestions);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [name,setName] = useState('');
+
+    const [email,setEmail] = useState('');
+    const [emailHelper,setEmailHelper] = useState("");
+
+    const [phone,setPhone] = useState(''); 
+    const [phoneHelper,setPhoneHelper] = useState("");
+
+    const [message, setMessage] = useState('');
+    
+    const [total, setTotal] = useState(0);
+    const [services, setServices] = useState([]);
+    const [platforms, setPlatform] = useState([]);
+    const [features, setFeatures] = useState([]);
+    const [customFeatures, setCustomFeatures] = useState("");
+    const [category, setCategory] = useState("");
+    const [users, setUsers] = useState(""); 
 
     const defaultOptions = {
         loop: true,
@@ -341,6 +378,14 @@ export default function Estimate() {
       setQuestions(newQuestions);
     }
 
+    const resetChoices = () => {
+      setTotal(0);
+      setPlatform([]);
+      setFeatures([]);
+      setCustomFeatures("");
+      setUsers("");
+    }
+
     const handlerSelect = (id) => {
       const newQuestions = cloneDeep(questions);
       const currentActive = newQuestions.filter(question => question.active);
@@ -364,16 +409,64 @@ export default function Estimate() {
       switch(newSelected.title) {
         case 'Custom Software Development': 
           setQuestions(softwareQuestions);
+          setServices(newSelected.title);
+
+          resetChoices();
+
           break;
         case 'iOS/Android Development':
           setQuestions(softwareQuestions);
+          setServices(newSelected.title);
+
+          resetChoices();
+
           break;
         case 'Web Development':
           setQuestions(websiteQuestions);
+          setServices(newSelected.title);
+
+          resetChoices(); 
+
           break;
         default: 
           setQuestions(newQuestions);
       }
+    }
+
+    const onChange = event => {
+      let valid;
+
+      switch(event.target.id) {
+          case'email':
+              setEmail(event.target.value);
+              valid = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(event.target.value);
+              if (!valid) {
+                  setEmailHelper("Invalid Email");
+              } else {
+                  setEmailHelper("");
+              }
+
+              break;
+          case('phone'): 
+              setPhone(event.target.value);
+              valid = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(event.target.value);
+              if (!valid) {
+                  setPhoneHelper("Invalid PhoneNumber");
+              } else {
+                  setPhoneHelper('');
+              }
+              break;
+          default: 
+              break;
+      }
+    }
+
+    const onNameChangeHandler = (event) => {
+      setName(event.target.value);
+    }
+
+    const onMessageChangeHandler = (event) => {
+      setMessage(event.target.value);
     }
 
     const navigationPreviousDisabled = () => {
@@ -394,19 +487,176 @@ export default function Estimate() {
       }
     }
 
+    const getTotal = () => {
+      let cost = 0;
+      const selections = questions.map(question => question.options.filter(option => option.selected)).filter(question => question.length > 0);
+      selections.map(options => options.map(option => cost += option.cost));
+      if (questions.length > 2) {
+        const userCost = questions.filter(question => question.title === 'How many users do you expect?').map(question => question.options.filter(option => option.selected))[0][0];
+        
+        setUsers(userCost.title);
+        cost -= userCost.cost;
+        cost *= userCost.cost;
+      }
+      setTotal(cost); 
+    }
+
+    const getPlatform = () => {
+      let newPlatforms = [];
+      if (questions.length > 2) { 
+       questions.filter(question => question.title === 'Which platforms do you need supported?')
+                .map(question => question.options.filter(option => option.selected))[0].map(option => newPlatforms.push(option.title));
+      console.log(newPlatforms);
+      setPlatform(newPlatforms);
+      }
+    }
+
+    const getFeatures = () => {
+      let newFeatures = [];
+      if (questions.length > 2) {
+        questions.filter(question => question.title === "Which features do you expect to use?")
+                .map(question => question.options.filter(option => option.selected))
+                .map(option => option.map(newFeature => newFeatures.push(newFeature.title)));
+      console.log(newFeatures);
+      setFeatures(newFeatures);
+      }
+    }
+
+    const getCustomFeatures = () => {
+      if (questions.length > 2) {
+        const newCustomFeatures = questions.filter(question => question.title === 'What type of custom features do you expect to need?')
+                                        .map(question => question.options.filter(option => option.selected))[0][0].title;
+        setCustomFeatures(newCustomFeatures);
+      }
+    }
+
+    const softwareSelection = (
+      <Grid container direction="column">
+                              <Grid item container alignItems="center" style={{marginBottom:  "1.25em"}}>
+                                <Grid item xs={2}>
+                                  <img src={check} alt="checkmark" />
+                                </Grid>
+                                <Grid item xs={10}>
+                                  <Typography variant="body1">
+                                    You want : {services} for
+                                    {platforms.length > 0 ? `for ${
+                              //if only web application is selected...
+                              platforms.indexOf("Web Application") > -1 &&
+                              platforms.length === 1
+                                ? //then finish sentence here
+                                  "a Web Application."
+                                : //otherwise, if web application and another platform is selected...
+                                platforms.indexOf("Web Application") > -1 &&
+                                  platforms.length === 2
+                                ? //then finish the sentence here
+                                  `a Web Application and an ${platforms[1]}.`
+                                : //otherwise, if only one platform is selected which isn't web application...
+                                platforms.length === 1
+                                ? //then finish the sentence here
+                                  `an ${platforms[0]}`
+                                : //otherwise, if other two options are selected...
+                                platforms.length === 2
+                                ? //then finish the sentence here
+                                  "an iOS Application and an Android Application."
+                                : //otherwise if all three are selected...
+                                platforms.length === 3
+                                ? //then finish the sentence here
+                                  "a Web Application, an iOS Application, and an Android Application."
+                                : null
+                            }` : null}
+                                  </Typography>
+                                </Grid>
+                              </Grid>
+
+                              <Grid item container alignItems="center" style={{marginBottom:  "1.25em"}}>
+                                <Grid item xs={2}>
+                                  <img src={check} alt="checkmark" />
+                                </Grid>
+                                <Grid item xs={10}>
+                                  <Typography variant="body1">
+                                  {"with "}
+                        {/* if we have features... */}
+                        {features.length > 0
+                          ? //...and there's only 1...
+                            features.length === 1
+                              ? //then end the sentence here
+                              `${features[0]}.`
+                              : //otherwise, if there are two features...
+                            features.length === 2
+                              ? //...then end the sentence here
+                              `${features[0]} and ${features[1]}.`
+                              : //otherwise, if there are three or more features...
+                              features
+                            //filter out the very last feature...
+                            .filter(
+                              (feature, index) =>
+                              index !== features.length - 1
+                            )
+                            //and for those features return their name...
+                            .map((feature, index) => (
+                              <span key={index}>{`${feature}, `}</span>
+                            ))
+                          : null}
+                        {features.length > 0 &&
+                          features.length !== 1 &&
+                          features.length !== 2
+                            ? //...and then finally add the last feature with 'and' in front of it
+                            ` and ${features[features.length - 1]}.`
+                            : null}
+                                  </Typography>
+                                </Grid>
+                              </Grid>
+
+                              <Grid item container alignItems="center">
+                                <Grid item  xs={2}>
+                                  <img src={check} alt="checkmark" />
+                                </Grid>
+                                <Grid item xs={10}>
+                                  <Typography variant="body1">
+                                    The custom features will be of {customFeatures.toLowerCase()} {`, and the project will be used by about ${users} users.`}
+                                  </Typography>
+                                </Grid>
+                              </Grid>
+
+                            </Grid>
+
+    );
+
+    const getCategory = () => {
+      if (questions.length === 2) {
+        const newCategory = questions.filter(question => question.title === "Which type of website are you wanting?")[0].options.filter(option => option.selected)[0].title;
+        setCategory(newCategory);
+      }
+    }
+
+    const websiteSelection = (
+    <Grid container direction="column">
+      <Grid item container alignItems="center">
+        <Grid item xs={2}>
+          <img src={check} alt="checkmark" />
+        </Grid>
+        <Grid item xs={10}>
+          <Typography variant="body1">
+            You want {category === 'Basic' ? " a Basic Website" : `an ${category} Website.`}
+          </Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+    );
+
     return(
         <Grid container direction="row">
             
-            <Grid item container direction="column" lg>
-                <Grid item style={{marginTop: '2em', marginLeft: '5em'}}>
-                    <Typography variant="h2">Estimate</Typography>
+            <Grid item container direction="column" lg justify="center" alignItems="center">
+                <Grid item style={{marginTop: '2em', marginLeft: matchesMD ? 0 : '5em'}}>
+                    <Typography variant="h2" align={matchesMD ? "center" : undefined}>Estimate</Typography>
                 </Grid>
-                <Grid item style={{marginRight: '10em', maxWidth: '50em', marginTop: '5.5em'}}>
+                <Grid item alignSelf="center" style={{marginRight:matchesMD ? 0 : '10em', width: matchesMD ? '70%' : '50em', marginTop: matchesMD ? matchesSM ? '1.5em' : '3em' : '5.5em'}}>
                     <Lottie options={defaultOptions} height="100%" width="100%"/>
                 </Grid>
             </Grid>
 
-            <Grid item container direction="column" alignItems="center" lg style={{marginRight: '2em', marginBottom: '25em'}}>
+            <Grid item container direction="column" alignItems="center" lg style={{marginRight: matchesMD ? 0 : '2em', marginBottom: '25em'}}>
                 {questions.filter(question => question.active).map( (question, index) => (
                     <React.Fragment key={index}>
                         <Grid item>
@@ -426,7 +676,7 @@ export default function Estimate() {
                                 md key={option.id} 
                                 component={Button}
                                 onClick={() => handlerSelect(option.id)}
-                                style={{display: 'grid', textTransform: 'none', borderRadius: 0,backgroundColor: option.selected ? 'red' : undefined}}>
+                                style={{display: 'grid', textTransform: 'none', borderRadius: 0,backgroundColor: option.selected ? theme.palette.secondary.main : undefined}}>
                                 <Grid item style={{maxWidth: '14em'}}>
                                     <Typography variant="h6" align="center" style={{marginBottom: "1em"}}>
                                         {option.title}
@@ -458,11 +708,89 @@ export default function Estimate() {
                 </Grid>
 
                 <Grid item>
-                    <Button variant="contained" className={classes.estimateButton}>Get Estimate</Button>
+                    <Button 
+                      variant="contained" 
+                      onClick={() => {
+                          setDialogOpen(true); 
+                          getTotal(); 
+                          getPlatform(); 
+                          getFeatures();
+                          getCustomFeatures();
+                          getCategory();
+                      }} className={classes.estimateButton}>
+                      Get Estimate
+                    </Button>
                 </Grid>
 
             </Grid>
-
+            <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} style={{zIndex: 1302}} fullWidth maxWidth="lg">
+                
+                <DialogContent style={{overflow: 'none'}}>
+                <Grid container justify="center">  
+                  <Grid item style={{marginTop: '1em'}}>
+                      <Typography variant="h2" align="center">
+                        Estimate
+                      </Typography>
+                  </Grid>
+                </Grid>
+                  <Grid container justify="space-evenly">
+                    <Grid item container direction="column" md={7} style={{maxWidth: '20em', marginBottom: '1em'}}>
+                          <Grid item style={{marginBottom: '0.5em'}}>
+                                <TextField 
+                                label="Name" 
+                                fullWidth 
+                                id="Name" 
+                                value={name} 
+                                onChange={(e) => onNameChangeHandler(e)}/>
+                            </Grid>
+                            <Grid item style={{marginBottom: '0.5em'}}>
+                                <TextField 
+                                label="Email" 
+                                error={emailHelper.length !== 0} 
+                                helperText = {emailHelper}
+                                fullWidth id="email" 
+                                value={email} 
+                                onChange={(e) => onChange(e)}/>
+                            </Grid>
+                            <Grid item style={{marginBottom: '0.5em'}}>
+                            <TextField 
+                                label="Phone" 
+                                error={phoneHelper.length !== 0} 
+                                helperText = {phoneHelper}
+                                fullWidth id="phone" 
+                                value={phone} 
+                                onChange={(e) => onChange(e)}/>
+                            </Grid>
+                            <Grid item style={{Width: matchesSM ? '100%' : "20em"}}>
+                              <TextField value={message} multiline rows={10} 
+                              id="message" onChange={(e) => onMessageChangeHandler(e)} 
+                              className={classes.Message} fullWidth
+                              InputProps={{disableUnderline: true}}
+                              style={{marginTop: '2em'}}/>
+                            </Grid>
+                        </Grid>
+                        <Grid item container direction="column" md={5} justify={matchesMD ? 'center' : undefined} style={{maxWidth: '30em'}}>
+                          <Grid item>
+                            {questions.length > 2 ? softwareSelection : websiteSelection}
+                          </Grid>
+                          <Grid item>
+                              <Typography variant="body1" paragraph>
+                                We can create this digital solution for an estimated : <span className={classes.specialText}>${total.toFixed(2)}</span>
+                              </Typography>
+                              <Typography variant="body1" paragraph>
+                                Fill out your name, phone number and email, place your request, and we'll get back to you with details moving forward and a final price.
+                              </Typography>
+                          </Grid>
+                          <Grid item style={{margin: matchesMD ? '0 auto' : undefined}}>
+                            <Button variant="contained" className={classes.estimateButton}>
+                              Place Request
+                              <img src={send} alt="paper airplane" style={{marginLeft: '0.5em'}} />  
+                            </Button>
+                          </Grid>
+                        </Grid>
+                  </Grid>
+                </DialogContent>
+            </Dialog>
         </Grid>
     );
 }
