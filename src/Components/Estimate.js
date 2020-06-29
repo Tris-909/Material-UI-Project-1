@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 import Lottie from 'react-lottie';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -34,6 +35,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import estimateAnimation from '../animations/integrationAnimation/estimateAnimation/data.json';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import TextField from '@material-ui/core/TextField';
+import Snackbar from '@material-ui/core/Snackbar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -349,6 +352,10 @@ export default function Estimate() {
     const [category, setCategory] = useState("");
     const [users, setUsers] = useState(""); 
 
+    const [loading,setLoading] = useState(false);
+
+    const [alert, setAlert] = useState({open: false, message: '', backgroundColor: ''});
+
     const defaultOptions = {
         loop: true,
         autoplay: true,
@@ -506,7 +513,6 @@ export default function Estimate() {
       if (questions.length > 2) { 
        questions.filter(question => question.title === 'Which platforms do you need supported?')
                 .map(question => question.options.filter(option => option.selected))[0].map(option => newPlatforms.push(option.title));
-      console.log(newPlatforms);
       setPlatform(newPlatforms);
       }
     }
@@ -517,7 +523,6 @@ export default function Estimate() {
         questions.filter(question => question.title === "Which features do you expect to use?")
                 .map(question => question.options.filter(option => option.selected))
                 .map(option => option.map(newFeature => newFeatures.push(newFeature.title)));
-      console.log(newFeatures);
       setFeatures(newFeatures);
       }
     }
@@ -538,8 +543,8 @@ export default function Estimate() {
                                 </Grid>
                                 <Grid item xs={10}>
                                   <Typography variant="body1">
-                                    You want : {services} for
-                                    {platforms.length > 0 ? `for ${
+                                    You want : {services} 
+                                    {platforms.length > 0 ? ` for ${
                               //if only web application is selected...
                               platforms.indexOf("Web Application") > -1 &&
                               platforms.length === 1
@@ -629,6 +634,56 @@ export default function Estimate() {
       }
     }
 
+    const sendEstimate = () => {
+      setLoading(true);
+      axios.get('https://us-central1-arcdev-d9a10.cloudfunctions.net/sendMail',
+      {params: {
+          name: name,
+          email: email,
+          phone: phone,
+          message: message,
+          total: total,
+          category: category,
+          service: services,
+          platforms: platforms,
+          features: features,
+          customFeatures: customFeatures,
+          user: users
+      }}
+      ).then(res => {
+        setLoading(false);
+        setAlert({
+          open: true,
+          message: 'Estimate placed successfully',
+          backgroundColor: '#4BB543'
+        });
+        setDialogOpen(false);
+      }).catch(err => {
+        setLoading(false);
+        setAlert({
+            open: true,
+            message: 'Failed to sent message, please try again',
+            backgroundColor: '#FF3232'
+        });
+        setDialogOpen(false);
+      });
+    }
+
+    const estimateDisabled = () => {
+      let disabled = true;
+      const emptySelections = questions.map(question => question.options.filter(option => option.selected)).filter(question => question.length === 0);
+      if (questions.length === 2) {
+        if (emptySelections.length === 1) {
+          disabled = false;
+        } 
+      } else if (questions.length === 1) {
+        disabled =  true;
+      } else if (emptySelections.length < 3 && questions[questions.length-1].options.filter(option => option.selected).length > 0) {
+        disabled = false;
+      }
+      return disabled;
+    }
+
     const websiteSelection = (
     <Grid container direction="column">
       <Grid item container alignItems="center">
@@ -647,16 +702,16 @@ export default function Estimate() {
     return(
         <Grid container direction="row">
             
-            <Grid item container direction="column" lg justify="center" alignItems="center">
+            <Grid item container direction="column" lg justify={matchesMD ? "center" : undefined} alignItems={matchesMD ? "center" : undefined}>
                 <Grid item style={{marginTop: '2em', marginLeft: matchesMD ? 0 : '5em'}}>
                     <Typography variant="h2" align={matchesMD ? "center" : undefined}>Estimate</Typography>
                 </Grid>
-                <Grid item alignSelf="center" style={{marginRight:matchesMD ? 0 : '10em', width: matchesMD ? '70%' : '50em', marginTop: matchesMD ? matchesSM ? '1.5em' : '3em' : '5.5em'}}>
+                <Grid item style={{marginRight:matchesMD ? 0 : '7em', width: matchesMD ? '70%' : '35em', marginTop: matchesMD ? matchesSM ? '1.5em' : '3em' : '5.5em'}}>
                     <Lottie options={defaultOptions} height="100%" width="100%"/>
                 </Grid>
             </Grid>
 
-            <Grid item container direction="column" alignItems="center" lg style={{marginRight: matchesMD ? 0 : '2em', marginBottom: '25em'}}>
+            <Grid item container direction="column" alignItems="center" lg style={{marginRight: matchesMD ? 0 : '2em', marginBottom: matchesMD ? '5em' : '25em'}}>
                 {questions.filter(question => question.active).map( (question, index) => (
                     <React.Fragment key={index}>
                         <Grid item>
@@ -710,6 +765,7 @@ export default function Estimate() {
                 <Grid item>
                     <Button 
                       variant="contained" 
+                      disabled={estimateDisabled()}
                       onClick={() => {
                           setDialogOpen(true); 
                           getTotal(); 
@@ -782,15 +838,25 @@ export default function Estimate() {
                               </Typography>
                           </Grid>
                           <Grid item style={{margin: matchesMD ? '0 auto' : undefined}}>
-                            <Button variant="contained" className={classes.estimateButton}>
-                              Place Request
-                              <img src={send} alt="paper airplane" style={{marginLeft: '0.5em'}} />  
+                            <Button variant="contained" onClick={sendEstimate} className={classes.estimateButton}>
+                              {loading ? <CircularProgress /> : 
+                                <React.Fragment> 
+                                  Place Request
+                                  <img src={send} alt="paper airplane" style={{marginLeft: '0.5em'}} />  
+                                </React.Fragment>}          
                             </Button>
                           </Grid>
                         </Grid>
                   </Grid>
                 </DialogContent>
             </Dialog>
+            <Snackbar 
+                open={alert.open} 
+                message={alert.message} 
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                onClose={() => setAlert({...alert, open:false})}
+                autoHideDuration={4000}
+                ContentProps={{style: {backgroundColor: alert.backgroundColor}}} />
         </Grid>
     );
 }
