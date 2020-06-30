@@ -19,6 +19,9 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1"
   },
+  "engines": {
+    "node": "14.4.0"
+  },
   "scripts": {
     "start": "react-scripts start -p $PORT",
     "build": "react-scripts build",
