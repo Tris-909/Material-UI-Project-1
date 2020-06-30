@@ -108,7 +108,7 @@ export default function CustomSoftware(props) {
         <React.Fragment>
         <Grid container direction="column" className={classes.MainContainer}>
             {/*------FIRST SECTION -------*/}
-            <Grid item container direction="row" justify={matchesMD ? 'center' : 'inherit'}>
+            <Grid item container direction="row" justify={matchesMD ? 'center' : undefined}>
                 <Hidden mdDown>
                 <Grid 
                     item 
@@ -175,7 +175,7 @@ export default function CustomSoftware(props) {
                         <img src={SaveTimeIcon} alt="Save Energy Icon" />
                     </Grid>
                 </Grid>
-                <Grid item container direction="column" style={{maxWidth: '15em' ,marginLeft: matchesSM ? '2em' : '0em' , marginBottom: matchesXS ? '5em' : '0em', textAlign: 'center'}}>
+                <Grid item container direction="column" style={{maxWidth: '15em' ,marginLeft: matchesSM ? '2em' : '0em' , marginBottom: matchesXS ? '5em' : '1em', textAlign: 'center'}}>
                     <Grid item>
                         <Typography variant="h2" style={{marginBottom: '0.5em'}}>Save Money</Typography>
                         <img src={SaveMoneyIcon} alt="Save Energy Icon" />

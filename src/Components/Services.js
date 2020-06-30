@@ -56,7 +56,7 @@ export default function Services(props) {
     const matchesLG = useMediaQuery(theme.breakpoints.down("lg"));
     
     return(
-        <Grid containe direction="column">
+        <Grid container direction="column">
             {/*------- Title ------*/}
             <Grid item style={{marginLeft: matchesSM ? 0 : '5em', marginTop: '3em'}}>
                 <Typography variant="h2" className={classes.pageTitle} style={{textAlign: matchesMD ? "center" : undefined}}>

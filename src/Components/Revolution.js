@@ -66,14 +66,14 @@ export default function Revolution(props) {
                     </Typography>
                 </Grid>
 
-                <Grid item container direction={matchesMD ? "column" : "row"} style={{marginBottom: matchesXS ? '1em' : '10em'}}>
+                <Grid item container direction={matchesMD ? "column" : "row"} style={{marginBottom: matchesSM ? '1em' : '10em'}}>
                     <Grid item md width="100%">
-                        <img src={VisionIcon} alt="Vision Icon" width={matchesXS ? '90%' : undefined}/>
+                        <img src={VisionIcon} alt="Vision Icon" width={matchesSM ? '90%' : undefined}/>
                     </Grid>
                     <Grid 
                         item container 
                         direction="column" 
-                        style={{marginLeft: matchesXS ? undefined : '5em', width: matchesMD ? '100%' : undefined}} 
+                        style={{marginLeft: matchesMD ? undefined : '5em',marginTop: matchesMD ? '2em' : undefined ,width: matchesMD ? '100%' : undefined}} 
                         md>
                         <Grid item>
                             <Typography variant="h4" align={matchesMD ? undefined : 'right'}>
@@ -149,7 +149,7 @@ export default function Revolution(props) {
             <Grid 
                 item container 
                 direction={matchesMD ? "column" : "row"} 
-                align="center" justify={matchesXS ? "undefined" : "center"}  
+                align="center" justify={matchesXS ? undefined : "center"}  
                 className={classes.Background}
                 style={{backgroundColor: theme.palette.common.gray}}>
                 <Grid 
