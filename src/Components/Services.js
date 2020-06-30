@@ -95,7 +95,7 @@ export default function Services(props) {
                 container 
                 direction={matchesLG ? "row" : matchesMD ? "column" : "row"} 
                 justify={matchesMD ? "center" : "flex-start"}>
-                <Grid item style={{marginLeft: matchesSM ? 0 : '5em', textAlign: matchesSM ? "center" : undefined }}>
+                <Grid item style={{marginLeft: matchesMD ? 0 : '5em', textAlign: matchesSM ? "center" : undefined }}>
                     <Typography variant="h4" className={classes.sectionTitle}>
                         Custom Software Development
                     </Typography>

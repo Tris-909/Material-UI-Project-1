@@ -111,7 +111,7 @@ export default function MobileDevelopment(props) {
                     <Grid item xs align="center" style={{marginBottom: matchesXS ? '3em' : undefined, marginTop: matchesXS ? '3em' : undefined}}>
                         <img src={phone} alt="Phone Icon" height={matchesXS ? "200em" : "350em"} width={matchesXS ? "200em" : "350em"}/>
                     </Grid>
-                    <Grid item container direction="column" xs align="center" justify="center">
+                    <Grid item container direction="column" style={{marginTop: matchesSM ? '2em' : undefined}} xs align="center" justify="center">
                         <Grid item>
                             <Typography align={matchesXS ? "center" : "right"} variant="h4" style={{marginBottom: '.5em'}}>
                                 Simultaneous Platform Support

@@ -44,14 +44,17 @@ const useStyles = makeStyles(theme => ({
         ...theme.typography.body3
     },
     RevotitleSpace: {
-        maxWidth: '20em'
+        maxWidth: '20em',
+        [theme.breakpoints.down("lg")]: {
+            width: '100%'
+        },
     }
 }));
 
 export default function Revolution(props) {
     const classes = useStyles();
     const theme = useTheme();
-
+    const matchesLG = useMediaQuery(theme.breakpoints.down("lg"));
     const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
     const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
     const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
@@ -302,7 +305,7 @@ export default function Revolution(props) {
             {/* EIGTH SECTION */}
             <Grid 
                 item container 
-                direction={matchesMD ? "column" : "row"} 
+                direction={matchesLG ? "column" : "row"} 
                 align="center" justify={matchesXS ? "undefined" : "center"}  
                 className={classes.Background}
                 style={{backgroundColor: theme.palette.common.yellow}}>

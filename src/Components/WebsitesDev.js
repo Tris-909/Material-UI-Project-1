@@ -99,7 +99,7 @@ export default function WebsitesDev(props) {
                         <Grid item>
                             <img src={AnalyticsIcon} alt="Analytics Icon" />
                         </Grid>
-                        <Grid item className={classes.Paragraph} style={{marginTop: '3em'}}>
+                        <Grid item className={classes.Paragraph} style={{marginTop: '3em', marginLeft: matchesMD ? matchesXS ? undefined : '3em' : '1em'}}>
                             <Typography variant="body1" paragraph>
                                 Knowledge is power, and data is 21st Century gold. Analyzing this data can reveal hidden patterns and trends in your business, <br/> empowering you to make smarter decisions with measurable effects.
                             </Typography> 
@@ -119,7 +119,7 @@ export default function WebsitesDev(props) {
                         <Grid item>
                             <img src={ECommerce} alt="ECommerce Icon" />
                         </Grid>
-                        <Grid item className={classes.Paragraph} style={{marginTop: '3em', marginLeft: '1em'}}>
+                        <Grid item className={classes.Paragraph} style={{marginTop: '3em', marginLeft: matchesMD ? matchesXS ? undefined : '3em' : '1em'}}>
                             <Typography variant="body1" paragraph>
                                 It’s no secret that people like to shop online.
                             </Typography>
@@ -141,7 +141,7 @@ export default function WebsitesDev(props) {
                         <Grid item>
                             <img src={OutrectIcon} alt="OutReach Icon" />
                         </Grid>
-                        <Grid item className={classes.Paragraph} style={{marginTop: '3em', marginLeft:'1em'}}>
+                        <Grid item className={classes.Paragraph} style={{marginTop: '3em', marginLeft: matchesMD ? matchesXS ? undefined : '3em' : '1em'}}>
                             <Typography variant="body1" paragraph>
                                 Draw people in with a dazzling website. Showing off your products online is a great way to help customers decide what’s right for them before visiting in person.
                             </Typography> 
@@ -161,7 +161,7 @@ export default function WebsitesDev(props) {
                         <Grid item>
                             <img src={SEOIcon} alt="SEO Icon" />
                         </Grid>
-                        <Grid item className={classes.Paragraph} style={{marginTop: '3em', marginLeft: '1em'}}>
+                        <Grid item className={classes.Paragraph} style={{marginTop: '3em', marginLeft: matchesMD ? matchesXS ? undefined : '3em' : '1em'}}>
                             <Typography variant="body1" paragraph>
                                 How often have you ever been to the second page of Google results?
                             </Typography>
