@@ -305,8 +305,8 @@ export default function Revolution(props) {
             {/* EIGTH SECTION */}
             <Grid 
                 item container 
-                direction={matchesLG ? "column" : "row"} 
-                align="center" justify={matchesXS ? "undefined" : "center"}  
+                direction={matchesMD ? "column" : "row"} 
+                align="center" justify={matchesXS ? undefined : "center"}  
                 className={classes.Background}
                 style={{backgroundColor: theme.palette.common.yellow}}>
                 <Grid 
@@ -339,7 +339,7 @@ export default function Revolution(props) {
                     </Grid>
                 </Grid> 
                 <Grid item lg style={{alignSelf: 'center'}}> 
-                    <img src={BuildIcon} alt="MockUp Icon" width={matchesMD ? '90%' : undefined}/>
+                    <img src={BuildIcon} alt="MockUp Icon" width={matchesLG ? '70%' : matchesMD ? '90%' : undefined}/>
                 </Grid>
             </Grid>            
 
@@ -348,7 +348,7 @@ export default function Revolution(props) {
             <Grid 
                 item container 
                 direction={matchesMD ? "column" : "row"} 
-                align="center" justify={matchesXS ? "undefined" : "center"}  
+                align="center" justify={matchesXS ? undefined : "center"}  
                 className={classes.Background}
                 style={{backgroundColor: theme.palette.common.red}}>
                 <Grid 
